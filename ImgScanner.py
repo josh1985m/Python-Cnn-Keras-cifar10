@@ -1,12 +1,11 @@
+from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, BatchNormalization, Activation
 from keras.constraints import maxnorm
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.utils import np_utils
 from keras.datasets import cifar10
-from tensorflow import keras
 import numpy
-import matplotlib.pyplot as plt
 
 #seed = 21
 #numpy.random.seed(seed)
@@ -26,20 +25,19 @@ model = Sequential()
 
 model.add(Conv2D(32, (3, 3), input_shape=X_train.shape[1:], padding='same'))
 model.add(Activation('relu'))
+keras.layers.GaussianNoise(55)
 model.add(Dropout(0.3))
 model.add(BatchNormalization())
 
-#model.add(Conv2D(96, (3, 3), padding='same'))
-#model.add(Activation('relu'))
-#model.add(MaxPooling2D(pool_size=(2, 2)))
-#keras.layers.GaussianNoise(1)
+#model.add(Conv2D(64, (4, 4), padding='same'))
+#model.add(Activation('selu'))
+#keras.layers.GaussianNoise(50)
 #model.add(Dropout(0.3))
 #model.add(BatchNormalization())
 
-#model.add(Conv2D(96, (3, 3), padding='same'))
-#model.add(Activation('relu'))
-#model.add(MaxPooling2D(pool_size=(2, 2)))
-#model.add(Dropout(0.5))
+#model.add(Conv2D(128, (8, 8), padding='same'))
+#model.add(Activation('tanh'))
+#model.add(Dropout(0.3))
 #model.add(BatchNormalization())
 
 #model.add(Conv2D(128, (4, 4), padding='same'))
@@ -49,25 +47,25 @@ model.add(BatchNormalization())
 #model.add(BatchNormalization())
 
 model.add(Flatten())
-model.add(Dropout(0.3))
+model.add(Dropout(0.25))
 
-#model.add(Dense(96))
+#model.add(Dense(64))
 #model.add(Activation('relu'))
-#model.add(Dropout(.3))
+#model.add(Dropout(.4))
 #model.add(BatchNormalization())
 
-model.add(Dense(256))
-model.add(Activation('relu'))
-model.add(Dropout(.4))
+#model.add(Dense(128))
+#model.add(Activation('tanh'))
+#model.add(Dropout(.4))
+#model.add(BatchNormalization())
+
+model.add(Dense(512))
+model.add(Activation('selu'))
+model.add(Dropout(0.35))
 model.add(BatchNormalization())
 
-#model.add(Dense(32))
-#model.add(Activation('relu'))
-#model.add(Dropout(0.3))
-#model.add(BatchNormalization())
-
 model.add(Dense(num_classes))
-model.add(Activation('hard_sigmoid'))
+model.add(Activation('sigmoid'))
 #softmax
 #exponential
 #elu
@@ -80,14 +78,14 @@ model.add(Activation('hard_sigmoid'))
 #hard_sigmoid
 #linear
 
-epochs = 1
+epochs = 5
 
-optimizer = keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
+#optimizer = keras.optimizers.Adam(learning_rate=0.060, beta_1=0.99, beta_2=0.999, amsgrad=False)
 #optimizer = keras.optimizers.RMSprop(learning_rate=0.001, rho=0.9)
-#optimizer = keras.optimizers.Adagrad(learning_rate=.01)
+optimizer = keras.optimizers.Adagrad(learning_rate=.01)
 #optimizer = keras.optimizers.Adadelta(learning_rate=1.0, rho=0.95)
-#optimizer = keras.optimizers.SGD(learning_rate=0.01, momentum=0.0, nesterov=False)
-#optimizer = keras.optimizers.Adamax(learning_rate=0.002, beta_1=0.9, beta_2=0.999)
+#optimizer = keras.optimizers.SGD(learning_rate=0.1, momentum=.04, nesterov=False)
+#optimizer = keras.optimizers.Adamax(learning_rate=0.01, beta_1=0.9, beta_2=0.999)
 #optimizer = keras.optimizers.Nadam(learning_rate=0.002, beta_1=0.9, beta_2=0.999)
 
 
